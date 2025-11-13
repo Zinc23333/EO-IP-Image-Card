@@ -1,26 +1,37 @@
-// 注意：这是一个根据文档描述编写的示例代码，具体对象和属性名称请参考最新的腾讯云官方文档。
+/**
+ * EdgeOne Node Functions
+ * 文件路径: ./node-functions/index.js
+ * 访问路径: https://your-domain.com/
+ *
+ * @param {object} context - EdgeOne 注入的事件上下文对象
+ * @returns {Response}
+ */
+export default function onRequest(context) {
+  // 从 context 对象中安全地获取 geo 和 clientIp
+  const geo = context.geo || {};
+  const clientIp = context.clientIp || 'IP Not Found';
 
-async function handleRequest(request) {
-  // EdgeOne 将地理位置信息附加到请求对象上，通常在一个名为 'edge' 或 'eo' 的属性中
-  const geo = request.edge.geolocation;
-
+  // 准备要返回的数据对象
+  // 属性名（country, region 等）基于 EdgeOne 的标准
   const locationData = {
-    ip: request.headers.get('EO-Client-IP'), // 假设获取客户端IP的请求头
-    city: geo.city,
-    region: geo.region,
+    ip: clientIp,
     country: geo.country,
+    region: geo.region,
+    city: geo.city,
     latitude: geo.latitude,
     longitude: geo.longitude,
     asn: geo.asn,
   };
 
-  return new Response(JSON.stringify(locationData, null, 2), {
+  // 将数据对象转换为格式化的 JSON 字符串
+  const body = JSON.stringify(locationData, null, 2);
+
+  // 返回一个标准的 Response 对象
+  return new Response(body, {
+    // 必须设置正确的 headers
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json; charset=utf-8',
+      'Access-Control-Allow-Origin': '*', // 允许跨域访问
     },
   });
 }
-
-addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request));
-});
