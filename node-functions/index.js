@@ -15,9 +15,9 @@ export default function onRequest(context) {
   // 属性名（country, region 等）基于 EdgeOne 的标准
   const locationData = {
     ip: clientIp,
-    country: geo.country,
-    region: geo.region,
-    city: geo.city,
+    country: geo.countryName,
+    region: geo.regionName,
+    city: geo.cityName,
     latitude: geo.latitude,
     longitude: geo.longitude,
     asn: geo.asn,
