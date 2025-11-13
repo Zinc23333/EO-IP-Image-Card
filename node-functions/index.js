@@ -16,7 +16,9 @@ export default function onRequest(context) {
   const locationData = {
     ip: clientIp,
     country: geo.countryName,
+    countryCode: geo.countryCodeNumeric,
     region: geo.regionName,
+    regionCode: geo.regionCode,
     city: geo.cityName,
     latitude: geo.latitude,
     longitude: geo.longitude,
