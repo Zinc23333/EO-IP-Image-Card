@@ -1,17 +1,17 @@
-import { GenerateImageParams } from "./imageProcessor";
+import { GenerateImageParams } from "./image_processor";
 import { getGeoZh, getIspNameZh } from "./utils";
 
 function getUrlFromParams(params: GenerateImageParams) {
     const ps: Object = {
         "bg": params.bgImg,
-        "text": params.text,
         "x": params.x,
         "y": params.y,
         "rotation": params.rotation,
         "fontSize": params.fontSize,
         "fontFamily": params.fontFamily,
         "defaultColor": params.defaultColor,
-        "lineHeight": params.lineHeight
+        "lineHeight": params.lineHeight,
+        "text": params.text
     };
 
     let url = "?";

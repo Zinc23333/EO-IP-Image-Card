@@ -1,6 +1,6 @@
 import { promises as fs } from 'fs';
 import path from 'path';
-import { generateImageWithText, GenerateImageParams } from '@/lib/imageProcessor';
+import { generateImageWithText, GenerateImageParams } from '@/lib/image_processor';
 
 /**
  * Serverless Function 入口
