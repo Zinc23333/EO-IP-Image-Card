@@ -1,6 +1,9 @@
 {
   "compilerOptions": {
     "baseUrl": "./",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "paths": {
+      "@/*": ["*"]
+    }
   }
 }

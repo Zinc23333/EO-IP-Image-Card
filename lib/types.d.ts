@@ -1,24 +1,24 @@
-interface MainProvince {
-  [provinceCode: string]: string;
-}
-
 interface MainCities {
   [provinceCode: string]: {
-    [cityEnglish: string]: string;
+    [cityEnglish: string]: string; // cityChinese
   };
 }
 
-interface OtherRegions {
-  [regionCode: string]: string;
+interface MainProvinces {
+  [provinceCode: string]: string; // provinceChinese
 }
 
-declare module '@/lib/translate/main_province.json' {
-  const value: MainProvince;
-  export default value;
+interface OtherRegions {
+  [countryCode: string]: string; // countryChinese
 }
 
 declare module '@/lib/translate/main_cities.json' {
   const value: MainCities;
+  export default value;
+}
+
+declare module '@/lib/translate/main_provinces.json' {
+  const value: MainProvinces;
   export default value;
 }
 
