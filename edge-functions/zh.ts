@@ -121,7 +121,11 @@ export function onRequest({ request }: { request: EORequest }) {
                         </div>
                         <div class="info-row">
                             <div class="info-label">ASN</div>
-                            <div class="info-value">${geo.asn} (${geo.cisp})</div>
+                            <div class="info-value">${geo.asn}</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">CISP</div>
+                            <div class="info-value">${geo.cisp}</div>
                         </div>
                     </div>
                 </div>
@@ -131,44 +135,67 @@ export function onRequest({ request }: { request: EORequest }) {
         </div>
     </div>
 
-    <script type="text/javascript" src="https://webapi.amap.com/maps"></script>
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15"></script>
     <script>
-        // 初始化地图
-        var map = new AMap.Map('mapContainer', {
-            zoom: 12,
-            center: [${geo.longitude}, ${geo.latitude}]
-        });
+        // 坐标转换函数
+        function initMapWithCoordinateConversion() {
+            // 将WGS84坐标转换为高德地图使用的GCJ02坐标
+            AMap.convertFrom([${geo.longitude}, ${geo.latitude}], 'gps', function(status, result) {
+                var mapCenter, markerPosition;
+                
+                if (status === 'complete' && result.info === 'ok') {
+                    // 转换成功，使用转换后的坐标
+                    mapCenter = [result.locations[0].lng, result.locations[0].lat];
+                    markerPosition = [result.locations[0].lng, result.locations[0].lat];
+                } else {
+                    // 转换失败，使用原始坐标（可能会有偏差）
+                    mapCenter = [${geo.longitude}, ${geo.latitude}];
+                    markerPosition = [${geo.longitude}, ${geo.latitude}];
+                }
+                
+                // 初始化地图
+                var map = new AMap.Map('mapContainer', {
+                    zoom: 12,
+                    center: mapCenter
+                });
 
-        // 添加标记点
-        var marker = new AMap.Marker({
-            position: [${geo.longitude}, ${geo.latitude}],
-            title: '客户端位置 - ${geo.cityName}',
-            label: {
-                content: '客户端IP: ${clientIp}',
-                offset: new AMap.Pixel(0, -20)
-            }
-        });
-        map.add(marker);
+                // 添加标记点
+                var marker = new AMap.Marker({
+                    position: markerPosition,
+                    title: '客户端位置 - ${geo.cityName}',
+                    label: {
+                        content: '客户端IP: ${clientIp}',
+                        offset: new AMap.Pixel(0, -20)
+                    }
+                });
+                map.add(marker);
 
-        // 添加信息窗体
-        var infoWindow = new AMap.InfoWindow({
-            content: \`
-                <div style="padding: 10px;">
-                    <h3 style="margin: 0 0 10px 0; color: #2c3e50;">位置详情</h3>
-                    <p><strong>城市:</strong> ${geo.cityName}</p>
-                    <p><strong>省份:</strong> ${geo.regionName}</p>
-                    <p><strong>国家:</strong> ${geo.countryName}</p>
-                    <p><strong>坐标:</strong> ${geo.longitude}, ${geo.latitude}</p>
-                    <p><strong>运营商:</strong> ${geo.cisp}</p>
-                </div>
-            \`,
-            offset: new AMap.Pixel(0, -30)
-        });
+                // 添加信息窗体
+                var infoWindow = new AMap.InfoWindow({
+                    content: \`
+                        <div style="padding: 10px;">
+                            <h3 style="margin: 0 0 10px 0; color: #2c3e50;">位置详情</h3>
+                            <p><strong>城市:</strong> ${geo.cityName}</p>
+                            <p><strong>省份:</strong> ${geo.regionName}</p>
+                            <p><strong>国家:</strong> ${geo.countryName}</p>
+                            <p><strong>坐标:</strong> \${markerPosition[0]}, \${markerPosition[1]}</p>
+                            <p><strong>运营商:</strong> ${geo.cisp}</p>
+                        </div>
+                    \`,
+                    offset: new AMap.Pixel(0, -30)
+                });
 
-        // 点击标记显示信息窗体
-        marker.on('click', function() {
-            infoWindow.open(map, marker.getPosition());
-        });
+                // 点击标记显示信息窗体
+                marker.on('click', function() {
+                    infoWindow.open(map, marker.getPosition());
+                });
+            });
+        }
+        
+        // 页面加载完成后初始化地图
+        window.onload = function() {
+            initMapWithCoordinateConversion();
+        };
     </script>
 </body>
 </html>`;
