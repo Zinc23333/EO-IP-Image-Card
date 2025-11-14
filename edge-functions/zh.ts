@@ -123,10 +123,6 @@ export function onRequest({ request }: { request: EORequest }) {
                             <div class="info-label">ASN</div>
                             <div class="info-value">${geo.asn}</div>
                         </div>
-                        <div class="info-row">
-                            <div class="info-label">CISP</div>
-                            <div class="info-value">${geo.cisp}</div>
-                        </div>
                     </div>
                 </div>
             </div>
