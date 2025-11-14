@@ -101,7 +101,7 @@ export function onRequest({ request }: { request: EORequest }) {
                     <div class="geo-section">
                         <div class="info-row">
                             <div class="info-label">国家</div>
-                            <div class="info-value">${geo.countryName} (${geo.countryCodeAlpha2})</div>
+                            <div class="info-value">${geo.countryName} (${geo.countryCodeAlpha2}/${geo.countryCodeNumeric})</div>
                         </div>
                         <div class="info-row">
                             <div class="info-label">省份</div>
@@ -113,7 +113,7 @@ export function onRequest({ request }: { request: EORequest }) {
                         </div>
                         <div class="info-row">
                             <div class="info-label">坐标</div>
-                            <div class="info-value">北纬 ${geo.latitude.toFixed(5)}°, 东经 ${geo.longitude.toFixed(5)}°</div>
+                            <div class="info-value">北纬 ${geo.latitude}°\n东经 ${geo.longitude}°</div>
                         </div>
                         <div class="info-row">
                             <div class="info-label">运营商</div>
