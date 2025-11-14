@@ -17,3 +17,12 @@ export function getGeoZh({ request }: { request: EORequest }) {
     }
     return name;
 }
+
+export function getIspNameZh({ request }: { request: EORequest }) {
+    const eo = request.eo;
+    if (eo.geo.cisp.substring(0, 2) === "中国") {
+        return eo.geo.cisp.substring(2);
+    } else {
+        return eo.geo.cisp;
+    }
+}
