@@ -2,5 +2,10 @@ import { getImageConfigUrl } from "@/lib/image_config";
 
 export function onRequest( {request, params}: { request: EORequest, params: { bg: string } } ) {
     const urlParams = getImageConfigUrl({ background: params.bg, request });
-    return new Response(`User id is ${params.bg} || ${urlParams}`);
+    if (!urlParams)
+        return new Response(`背景图片不存在`, {
+            status: 404,
+            headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+        });
+    return fetch(`/img${urlParams}`);
 }

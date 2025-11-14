@@ -43,5 +43,9 @@ export function getImageConfigUrl({ background, request }: { background: string,
         },
     }
 
-    return getUrlFromParams(images[background]);
+    const params = images[background];
+    if (!params)
+        return null;
+    else
+        return getUrlFromParams(params);
 }
