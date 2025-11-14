@@ -9,28 +9,29 @@
 export default function onRequest(context) {
   // 从 context 对象中安全地获取 geo 和 clientIp
   const geo = context.geo || {};
-  const clientIp = context.clientIp || 'IP Not Found';
+  const clientIp = context.clientIp || 'unknown';
+  const uuid = context.uuid || 'unknown';
 
   // 准备要返回的数据对象
   // 属性名（country, region 等）基于 EdgeOne 的标准
   const locationData = {
+    uuid: uuid,
     ip: clientIp,
-    country: geo.countryName,
-    countryCode: geo.countryCodeNumeric,
-    region: geo.regionName,
+    asn: geo.asn,
+    countryName: geo.countryName,
+    countryCodeAlpha2: geo.countryCodeAlpha2,
+    countryCodeAlpha3: geo.countryCodeAlpha3,
+    countryCodeNumeric: geo.countryCodeNumeric,
+    regionName: geo.regionName,
     regionCode: geo.regionCode,
-    city: geo.cityName,
+    cityName: geo.cityName,
     latitude: geo.latitude,
     longitude: geo.longitude,
-    asn: geo.asn,
   };
 
-  // 将数据对象转换为格式化的 JSON 字符串
-  const body = JSON.stringify(locationData, null, 2);
+  const body = JSON.stringify(locationData);
 
-  // 返回一个标准的 Response 对象
   return new Response(body, {
-    // 必须设置正确的 headers
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
       'Access-Control-Allow-Origin': '*', // 允许跨域访问
