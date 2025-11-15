@@ -3,6 +3,6 @@
     "@types/node": "^20.19.25"
   },
   "dependencies": {
-    "sharp": "^0.34.5"
+    "@napi-rs/canvas": "^0.1.82"
   }
 }
