@@ -9,10 +9,10 @@ import { GenerateImageParams } from '@/lib/generate_image_params';
  * @param {Request} context.request - 包含请求信息的标准 Request 对象
  * @returns {Promise<Response>} Fetch API 标准的 Response 对象
  */
-export default async function onRequest(context: { request: Request }): Promise<Response> {
+export default async function onRequest({ request}: { request: Request }): Promise<Response> {
   try {
     // 关键修改：从 context.request.url 获取 URL
-    const { searchParams } = new URL(context.request.url);
+    const { searchParams } = new URL(request.url);
 
     // 1. 解析和验证必要的参数
     const bg = searchParams.get('bg');
@@ -26,7 +26,7 @@ export default async function onRequest(context: { request: Request }): Promise<
     }
 
     // 2. 构建背景图片路径并读取文件
-    const assetUrl = new URL(`/public/assets/bg/${bg}.webp`, context.request.url);
+    const assetUrl = new URL(`/public/assets/bg/${bg}.webp`, request.headers.get("authority"));
     const resp = await fetch(assetUrl);
 
     if (!resp.ok) {
