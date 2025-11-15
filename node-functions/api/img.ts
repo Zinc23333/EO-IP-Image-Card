@@ -29,7 +29,7 @@ export default async function onRequest({ request}: { request: Request }): Promi
     const resp = await fetch(`${new URL(request.url).origin}/assets/bg/${bg}.webp`);
 
     if (!resp.ok) {
-      return new Response(`背景图片不存在: ${bg}.webp (${resp})`, {
+      return new Response(`背景图片不存在: ${bg}.webp (${resp.url})`, {
         status: 404,
         headers: { 'Content-Type': 'text/plain; charset=utf-8' },
       });
