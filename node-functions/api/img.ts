@@ -26,12 +26,10 @@ export default async function onRequest({ request}: { request: Request }): Promi
     }
 
     // 2. 构建背景图片路径并读取文件
-    const assetUrl = new URL(`/public/assets/bg/${bg}.webp`);
-    const resp = await fetch(assetUrl);
+    const resp = await fetch(`${new URL(request.url).origin}/assets/bg/${bg}.webp`);
 
     if (!resp.ok) {
-      console.error("读取背景图片失败:", assetUrl.href);
-      return new Response(`背景图片不存在: ${bg}.webp (${assetUrl.href})`, {
+      return new Response(`背景图片不存在: ${bg}.webp (${resp})`, {
         status: 404,
         headers: { 'Content-Type': 'text/plain; charset=utf-8' },
       });
