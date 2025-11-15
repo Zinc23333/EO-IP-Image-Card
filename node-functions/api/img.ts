@@ -31,7 +31,7 @@ export default async function onRequest(context: { request: Request }): Promise<
 
     if (!resp.ok) {
       console.error("读取背景图片失败:", assetUrl.href);
-      return new Response(`背景图片不存在: ${bg}.webp`, {
+      return new Response(`背景图片不存在: ${bg}.webp (${assetUrl.href})`, {
         status: 404,
         headers: { 'Content-Type': 'text/plain; charset=utf-8' },
       });
