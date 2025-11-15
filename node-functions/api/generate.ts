@@ -25,7 +25,7 @@ export default async function onRequest({ request }: { request: EORequest }): Pr
     }
 
     // 2. 构建背景图片路径并读取文件
-    const resp = await fetch(`${getBaseUrl({request})}/assets/bg/${bg}.webp`);
+    const resp = await fetch(`${getBaseUrl({request})}/public/assets/bg/${bg}.webp`);
 
     if (!resp.ok) {
       return new Response(`背景图片不存在: ${bg}.webp (${resp.url})`, {
