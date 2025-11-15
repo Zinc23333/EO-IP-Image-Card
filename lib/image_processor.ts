@@ -1,4 +1,5 @@
 import sharp, { Sharp, Metadata } from 'sharp';
+import { GenerateImageParams } from './generate_image_params';
 
 // 定义解析后文本片段的类型，使用"可辨识联合类型"
 type TextSegment = {
@@ -22,19 +23,6 @@ interface CreateSvgOptions {
   x: number;
   y: number;
   rotation: number;
-}
-
-// 定义主函数的参数接口
-export interface GenerateImageParams {
-  bgImg: string | Buffer;
-  text: string;
-  x: number;
-  y: number;
-  rotation?: number;
-  fontSize?: number;
-  fontFamily?: string;
-  defaultColor?: string;
-  lineHeight?: number;
 }
 
 /**

@@ -1,4 +1,4 @@
-import { GenerateImageParams } from "./image_processor";
+import { GenerateImageParams } from "./generate_image_params";
 import { getGeoZh, getIspNameZh } from "./utils";
 
 function getUrlFromParams(params: GenerateImageParams) {
