@@ -26,7 +26,7 @@ export default async function onRequest(context: { request: Request }): Promise<
     }
 
     // 2. 构建背景图片路径并读取文件
-    const assetUrl = new URL(`/assets/bg/${bg}.webp`, context.request.url);
+    const assetUrl = new URL(`/public/assets/bg/${bg}.webp`, context.request.url);
     const resp = await fetch(assetUrl);
 
     if (!resp.ok) {
