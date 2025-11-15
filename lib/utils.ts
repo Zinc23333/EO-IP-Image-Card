@@ -26,3 +26,10 @@ export function getIspNameZh({ request }: { request: EORequest }) {
         return eo.geo.cisp;
     }
 }
+
+export function getBaseUrl( {request}: { request: EORequest } ) {
+    const host = request.headers.get('host') || '';
+    const protocol = request.headers.get('x-forwarded-proto') || 'http';
+    const baseUrl = `${protocol}://${host}`;
+    return baseUrl;
+} 

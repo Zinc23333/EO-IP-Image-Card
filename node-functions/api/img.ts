@@ -1,7 +1,6 @@
-import { promises as fs } from 'fs';
-import path from 'path';
 import { generateImageWithText } from '@/lib/image_processor';
 import { GenerateImageParams } from '@/lib/generate_image_params';
+import { getBaseUrl } from '@/lib/utils';
 
 /**
  * Serverless Function 入口
@@ -9,7 +8,7 @@ import { GenerateImageParams } from '@/lib/generate_image_params';
  * @param {Request} context.request - 包含请求信息的标准 Request 对象
  * @returns {Promise<Response>} Fetch API 标准的 Response 对象
  */
-export default async function onRequest({ request}: { request: Request }): Promise<Response> {
+export default async function onRequest({ request }: { request: EORequest }): Promise<Response> {
   try {
     // 关键修改：从 context.request.url 获取 URL
     const { searchParams } = new URL(request.url);
@@ -26,7 +25,7 @@ export default async function onRequest({ request}: { request: Request }): Promi
     }
 
     // 2. 构建背景图片路径并读取文件
-    const resp = await fetch(`${new URL(request.url).origin}/assets/bg/${bg}.webp`);
+    const resp = await fetch(`${getBaseUrl({request})}/assets/bg/${bg}.webp`);
 
     if (!resp.ok) {
       return new Response(`背景图片不存在: ${bg}.webp (${resp.url})`, {

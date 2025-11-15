@@ -1,4 +1,5 @@
 import { getImageConfigUrl } from "@/lib/image_config";
+import { getBaseUrl } from "@/lib/utils";
 
 export function onRequest( {request, params}: { request: EORequest, params: { bg: string } } ) {
     const urlParams = getImageConfigUrl({ background: params.bg, request });
@@ -9,9 +10,5 @@ export function onRequest( {request, params}: { request: EORequest, params: { bg
         });
     }
 
-    
-    const host = request.headers.get('host') || '';
-    const protocol = request.headers.get('x-forwarded-proto') || 'http';
-    const baseUrl = `${protocol}://${host}`;
-    return new Response(`${baseUrl}/api/img${urlParams}`);
+    return new Response(`${getBaseUrl({request})}/api/img${urlParams}`);
 }
