@@ -26,19 +26,19 @@ export default async function onRequest(context: { request: Request }): Promise<
     }
 
     // 2. 构建背景图片路径并读取文件
-    const bgPath = path.join(process.cwd(), 'assets', 'bg', `${bg}.webp`);
-    
-    let bgImgBuffer: Buffer;
-    try {
-      bgImgBuffer = await fs.readFile(bgPath);
-    } catch (error) {
-      // 在 serverless 环境中，打印日志方便排查路径问题
-      console.error(`读取背景图片失败，路径: ${bgPath}`, error);
-      return new Response(`背景图片不存在: ${bg}.webp (${bgPath})`, {
+    const assetUrl = new URL(`/assets/bg/${bg}.webp`, context.request.url);
+    const resp = await fetch(assetUrl);
+
+    if (!resp.ok) {
+      console.error("读取背景图片失败:", assetUrl.href);
+      return new Response(`背景图片不存在: ${bg}.webp`, {
         status: 404,
         headers: { 'Content-Type': 'text/plain; charset=utf-8' },
       });
     }
+
+    const bgImgArrayBuffer = await resp.arrayBuffer();
+    const bgImgBuffer = Buffer.from(bgImgArrayBuffer);
 
     // 3. 准备 generateImageWithText 函数的参数
     const options: GenerateImageParams = {
