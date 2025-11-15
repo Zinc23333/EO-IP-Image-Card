@@ -1,6 +1,6 @@
 import { generateImageWithText } from '@/lib/image_processor';
 import { GenerateImageParams } from '@/lib/generate_image_params';
-import { getBaseUrl } from '@/lib/utils';
+import { debugRequestInfo, getBaseUrl } from '@/lib/utils';
 
 /**
  * Serverless Function 入口
@@ -28,7 +28,7 @@ export default async function onRequest({ request }: { request: EORequest }): Pr
     const resp = await fetch(`${getBaseUrl({request})}/public/assets/bg/${bg}.webp`);
 
     if (!resp.ok) {
-      return new Response(`背景图片不存在: ${bg}.webp (${resp.url})`, {
+      return new Response(`背景图片不存在: ${bg}.webp (${resp.url}) \n${debugRequestInfo({request})}`, {
         status: 404,
         headers: { 'Content-Type': 'text/plain; charset=utf-8' },
       });
