@@ -26,7 +26,7 @@ export default async function onRequest({ request}: { request: Request }): Promi
     }
 
     // 2. 构建背景图片路径并读取文件
-    const assetUrl = new URL(`/public/assets/bg/${bg}.webp`, request.headers.get("host"));
+    const assetUrl = new URL(`/public/assets/bg/${bg}.webp`);
     const resp = await fetch(assetUrl);
 
     if (!resp.ok) {
