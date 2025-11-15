@@ -17,11 +17,11 @@ function getUrlFromParams(params: GenerateImageParams) {
     let url = "?";
     for (const [key, value] of Object.entries(ps)) {
         if (value) 
-            url += `${key}=${value}&`;
+            url += `${key}=${encodeURIComponent(value)}&`;
     }
     url = url.slice(0, -1);
 
-    return encodeURIComponent(url);
+    return url;
 }
 
 export function getImageConfigUrl({ background, request }: { background: string, request: EORequest }) {
