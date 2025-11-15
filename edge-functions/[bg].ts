@@ -7,6 +7,6 @@ export function onRequest( {request, params}: { request: EORequest, params: { bg
             status: 404,
             headers: { 'Content-Type': 'text/plain; charset=utf-8' },
         });
-    return new Response(urlParams);
-    return fetch(`/img${urlParams}`);
+    // return new Response(urlParams);
+    return fetch(`/api/img${urlParams}`);
 }
