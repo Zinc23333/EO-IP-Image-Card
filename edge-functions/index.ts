@@ -2,7 +2,6 @@ export async function onRequest({ request }: { request: EORequest }) {
   const eo = request.eo;
   const r = JSON.stringify({eo});
 
-
   return new Response(
     r,
     {
