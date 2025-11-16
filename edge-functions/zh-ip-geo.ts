@@ -1,4 +1,4 @@
-import { getGeoZh } from '@/lib/utils'
+import { getGeoZh } from '@/lib/utils/utils'
 
 export function onRequest({ request }: { request: EORequest }) {
   const name = getGeoZh({ request });
