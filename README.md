@@ -2,7 +2,9 @@
 
 一个基于 EdgeOne 平台的 IP 地理位置图片卡片生成器，可将 IP 地理位置信息生成图片卡片。
 
-![preview](https://ip.zinc233.top/img/test)
+[Preview](http://ip.zinc233.top/img/test)
+![Preview](https://ip.zinc233.top/img/test)
+
 
 ## 功能特性
 
